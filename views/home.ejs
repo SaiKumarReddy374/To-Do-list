@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+          /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Headings */
+        h1 {
+            font-size: 2em;
+            color: #2c3e50;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            color: #34495e;
+        }
+
+        /* To-Do List Styles */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        li:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Title Styles */
+        .todo-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #2980b9; /* Blue color */
+        }
+
+        /* Description Styles */
+        .todo-description {
+            font-style: italic;
+            color: #7f8c8d; /* Grey color */
+        }
+
+        /* Due Date Styles */
+        .todo-due-date {
+            color: #e67e22; /* Orange color */
+        }
+
+        /* Status Styles */
+        .todo-status {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        /* Completed Status */
+        .completed {
+            text-decoration: line-through;
+            color: #27ae60; /* Green color */
+        }
+
+        /* Buttons */
+        button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Links */
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #2ecc71;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #27ae60;
+        }
+    </style>
+    <link rel="stylesheet" href="/styles.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <h1>Welcome, <%= users.name %>!</h1>
+    <h2>Your To-Do List</h2>
+
+    <ul>
+        <% todos.forEach(todo => { %>
+            <li>
+                <span <%= todo.status === 'completed' ? 'style="text-decoration: line-through;"' : '' %> >
+                    <%= todo.title %> - <%= todo.description %> (Due: <%= todo.dueDate ? todo.dueDate.toLocaleString() : 'N/A' %>) - Status: <%= todo.status %>
+                </span>
+                <form action="/home/update/<%= todo._id %>" method="POST" style="display: inline;">
+                    <button type="submit" name="action" value="update">
+                        <%= todo.status === 'completed' ? 'Mark as Incomplete' : 'Mark as Complete' %>
+                    </button>
+                </form>
+                <form action="/home/delete/<%= todo._id %>" method="POST" style="display: inline;">
+                    <button type="submit" name="action" value="delete">Delete</button>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+
+    <a href="/home/add">Add New To-Do Item</a>
+    <a href="/logout">logout</a>
+
+    <script src="/script.js"></script> <!-- Link to your JavaScript file -->
+</body>
+</html>
